@@ -26,7 +26,8 @@ jobs:
       - uses: Azure/container-scan@v0
         with:
           image-name: ${{ github.repository }}/cve:${{ github.ref }}
-
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Push to Docker Hub
         uses: docker/build-push-action@v1
         with:
