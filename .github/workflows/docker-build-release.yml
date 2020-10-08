@@ -1,0 +1,40 @@
+---
+name: Build and Release Docker Images
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - v*
+  schedule:
+    - cron: '0 0 * * *'
+jobs:
+  push_to_registry:
+    name: Push Docker image to GitHub Packages
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: Build and push to GitHub Packages
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: docker.pkg.github.com
+          repository: ${{ github.repository }}/cve
+          tag_with_ref: true
+      - uses: Azure/container-scan@v0
+        with:
+          image-name: ${{ github.repository }}/cve:${{ github.ref }}
+      - name: Push to Docker Hub
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: ${{ github.repository }}
+          tag_with_ref: true
+      - name: Upload README to Dockerhub
+        uses: proum-public/actions/docker/readme-upload@v1
+        with:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
