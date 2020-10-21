@@ -40,9 +40,8 @@ jobs:
       - name: Push to Docker Hub
         uses: docker/build-push-action@v1
         with:
-          repository: proum/${{ github.event.repository.name }}
-          tags: ${{ steps.vars.outputs.tag }}
-          tag_with_ref: false
+          tags: proum/${{ github.event.repository.name }}:${{ steps.vars.outputs.tag }}
+          push: true
       - name: Upload README to Dockerhub
         uses: proum-public/actions/docker/readme-upload@v1
         with:
