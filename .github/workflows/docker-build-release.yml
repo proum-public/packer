@@ -16,7 +16,7 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v2
       - name: Get the image tag
-        id: image
+        id: vars
         run: echo ::set-output name=tag::$([[ "${GITHUB_REF:10}" = "main" ]] && echo "latest" || echo "${GITHUB_REF:11}")
       - name: Build and push to GitHub Packages
         uses: docker/build-push-action@v1
@@ -41,7 +41,7 @@ jobs:
         uses: docker/build-push-action@v1
         with:
           repository: proum/${{ github.event.repository.name }}
-          tags: ${{ image.tag }}
+          tags: ${{ steps.vars.outputs.tag }}
       - name: Upload README to Dockerhub
         uses: proum-public/actions/docker/readme-upload@v1
         with:
