@@ -85,5 +85,6 @@ jobs:
       - name: Upload README to Dockerhub
         uses: proum-public/actions/docker/readme-upload@v1
         with:
-          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+          dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
+          dockerhub_password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          dockerhub_repository: ${{ env.dockerhub_repository }}
