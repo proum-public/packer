@@ -42,6 +42,7 @@ jobs:
         with:
           repository: proum/${{ github.event.repository.name }}
           tags: ${{ steps.vars.outputs.tag }}
+          tag_with_ref: false
       - name: Upload README to Dockerhub
         uses: proum-public/actions/docker/readme-upload@v1
         with:
