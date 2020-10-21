@@ -26,6 +26,7 @@ jobs:
       - uses: azure/container-scan@v0
         with:
           image-name: docker.pkg.github.com/${{ github.repository }}/cve:${{ github.sha }}
+          severity-threshold: CRITICAL
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Push to Docker Hub
