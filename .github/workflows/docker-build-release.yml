@@ -1,5 +1,6 @@
 ---
 name: Build and Release Docker Images
+
 on:
   push:
     branches:
@@ -8,6 +9,10 @@ on:
       - v*
   schedule:
     - cron: '0 0 * * *'
+
+env:
+  dockerhub_repository: proum
+
 jobs:
   push_to_registry:
     name: Push Docker image to GitHub Packages
@@ -22,7 +27,7 @@ jobs:
       - name: Prepare
         id: prep
         run: |
-          DOCKER_IMAGE=proum/packer
+          DOCKER_IMAGE=${{ env.dockerhub_repository }}/${{ github.event.repository.name }}
           VERSION=noop
           if [ "${{ github.event_name }}" = "schedule" ]; then
             VERSION=nightly
@@ -57,7 +62,7 @@ jobs:
           format: 'template'
           template: '@/contrib/sarif.tpl'
           output: 'trivy-results.sarif'
-          severity: 'CRITICAL'
+          severity: 'CRITICAL,HIGH'
 
       - name: Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v1
@@ -80,5 +85,5 @@ jobs:
       - name: Upload README to Dockerhub
         uses: proum-public/actions/docker/readme-upload@v1
         with:
-          DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
