@@ -18,7 +18,7 @@ jobs:
       - name: Prepare
         id: prep
         run: |
-          DOCKER_IMAGE=proum/${{ github.event.repository.name }}
+          DOCKER_IMAGE=proum/packer
           VERSION=noop
           if [ "${{ github.event_name }}" = "schedule" ]; then
             VERSION=nightly
