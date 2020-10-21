@@ -44,19 +44,12 @@ docker run \
 
 ## CVE Scan Report
 
-The subject of the scan is always the image with the `latest` tag.
-Older releases/tags may contain unknown vulnerabilities!
-The list only contains CVE that have already been fixed,
-but not yet included in this image due to outdated package sources.
-
-If you wish to get a complete list, please run:
+Please see [Security](https://github.com/proum-public/packer/security/code-scanning)
 
 ```
 docker run -it --rm aquasec/trivy \
     proum/<image>:<tag>
 ```
-
-@[:markdown](cve_report.md)
 
 ## Versioning
 
