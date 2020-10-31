@@ -61,12 +61,12 @@ jobs:
 
       - name: Build an image from Dockerfile
         run: |
-          docker build -t docker.pkg.github.com/${{ github.event.repository.name }}/cve:${{ github.sha }} .
+          docker build -t docker.pkg.github.com/${{github.repository}}/cve:${{ github.sha }} .
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: docker.pkg.github.com/${{ github.event.repository.name }}/cve:${{ github.sha }}
+          image-ref: docker.pkg.github.com/${{github.repository}}/cve:${{ github.sha }}
           format: 'template'
           template: '@/contrib/sarif.tpl'
           output: 'trivy-results.sarif'
