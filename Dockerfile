@@ -1,9 +1,5 @@
-FROM hashicorp/packer:1.5.6
+FROM hashicorp/packer:1.6.5
 
-RUN apk --update --no-cache add \
-    python3=3.8.2-r1 \
-    && pip3 install --upgrade \
-    pip==20.2.3 \
-    hcloud==1.9.1 \
-    argparse==1.4.0 \
+RUN apk --no-cache add \
+    ansible \
     && rm -rf /tmp/*
