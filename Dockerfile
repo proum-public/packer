@@ -4,4 +4,5 @@ RUN apk --no-cache add \
     ansible \
     gettext \
     openssh \
+    sshpass \
     && rm -rf /tmp/*
