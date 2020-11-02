@@ -1,4 +1,4 @@
-FROM hashicorp/packer:1.6.5
+FROM hashicorp/packer:1.6.4
 
 RUN apk --no-cache add \
     ansible \
